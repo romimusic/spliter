@@ -1,7 +1,7 @@
 import '../css/Button.scss';
 
-const Buttton = ({ text }) => {
-  return <button className='Button'>{ text }</button>;
+const Buttton = ({ text, onClick }) => {
+  return <button className='Button' onClick={onClick}>{ text }</button>;
 }
 
 export default Buttton;

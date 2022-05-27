@@ -1,37 +1,80 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Button from "../components/Button";
-import InputValue from "../components/InputValue";
 import Title from "../components/Title";
 import "../css/Discount.scss";
-import dolarIcon from "../assets/icon-dollar.svg";
+import dollarIcon from "../assets/icon-dollar.svg";
 import personIcon from "../assets/icon-person.svg";
-const discountAmount = ["5%", "10%", "15%", "25%", "50%"];
 
 const Discount = () => {
-  const [ total, setTotal ] = useState(0);
-  const [ tip, setTip ] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [tip, setTip] = useState(0);
 
-  const handleChange = () => {
-    
-  }
+  const valueRef = useRef();
+  const customPercentage = useRef();
+  const personValue = useRef();
+
+  const discountAmount = [5, 10, 15, 25, 50];
+
+  const handleChange = (value) => {
+    const amount = valueRef.current.value;
+    const percentage = customPercentage.current.value
+      ? customPercentage.current.value
+      : value;
+    const person = personValue.current.value;
+
+    let total = parseFloat((amount * percentage) / 100).toFixed(2);
+    let tip = parseFloat((amount * 0.12) / person).toFixed(2);
+
+    setTip(tip);
+    setTotal((amount - total) / person);
+  };
 
   return (
     <section className="Discount">
       <div className="Discount__amount">
         <Title tittle="Bill" />
-        <InputValue img={dolarIcon} type="number" placeHolder="147.5" />
+        <div className="Input">
+          <span className="Input__Icon">
+            <img src={dollarIcon} alt="Dollar" />
+          </span>
+          <input
+            ref={valueRef}
+            className="Input__Editable"
+            type="number"
+            placeholder="142.55"
+            required
+          />
+        </div>
 
         <Title tittle="Select Tip %" />
-
         <article className="Discount__percentage">
           {discountAmount.map((discount) => {
-            return <Button key={discount} text={discount} onClik={handleChange} />;
+            return (
+              <Button
+                key={discount}
+                text={discount}
+                onClick={() => {
+                  handleChange(discount);
+                }}
+              />
+            );
           })}
-          <input type="number" placeholder="Custom %" />
+          <input ref={customPercentage} type="number" placeholder="Custom %" />
         </article>
 
         <Title tittle="Number of People" />
-        <InputValue img={personIcon} type="number" placeHolder="5" />
+        <div className="Input">
+          <span className="Input__Icon">
+            <img src={personIcon} alt="Person Icon" />
+          </span>
+          <input
+            ref={personValue}
+            className="Input__Editable"
+            type="number"
+            placeholder="5"
+            required
+          />
+        </div>
       </div>
 
       <div className="Discount__Output">
@@ -41,7 +84,7 @@ const Discount = () => {
             <p>/ person </p>
           </div>
           <div className="Output__total">
-            <img src={dolarIcon} alt="dollar" />
+            <img src={dollarIcon} alt="dollar" />
             <p> {tip}</p>
           </div>
         </div>
@@ -51,7 +94,7 @@ const Discount = () => {
             <p>/ person </p>
           </div>
           <div className="Output__total">
-            <img src={dolarIcon} alt="dollar" />
+            <img src={dollarIcon} alt="dollar" />
             <p>{total}</p>
           </div>
         </div>
