@@ -1,0 +1,17 @@
+@import './Variables.scss';
+
+.Button {
+  width: 100%;
+  padding: 12px;
+  font-size: $smallText;
+  font-weight: bold;
+  color: $whiteColor;
+  background-color: $secondaryColor;
+  border-radius: 5px;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $primaryColor;
+  }
+}

@@ -1,0 +1,17 @@
+$primaryColor: #41729F;
+$secondaryColor: #274472;
+$backgroundColor: #C3E0E5;
+$lightBackgroundColor: rgba(195, 225, 229, 0.3);
+$whiteColor: #fff;
+$smallText: 1.6rem;
+$largeText: 2.4rem;
+
+:export {
+  primaryColor: $primaryColor;
+  secondaryColor: $secondaryColor;
+  backgroundColor: $backgroundColor;
+  lightBackgroundColor: $lightBackgroundColor;
+  whiteColor: $whiteColor;
+  smallText: $smallText;
+  largeText: $largeText;
+}

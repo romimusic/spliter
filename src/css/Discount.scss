@@ -1,0 +1,77 @@
+@import './Variables.scss';
+
+.Discount {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px;
+  font-size: $smallText;
+  background-color: $whiteColor;
+  border-radius: 50px 50px 0 0;
+
+  & h2 {
+    font-size: $smallText;
+    color: $secondaryColor;
+    margin: 12px 0;
+  }
+
+  &__amount {
+    width: 100%;
+    margin-bottom: 1.8rem;
+  }
+
+  &__percentage {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    margin-top: 22px;
+    margin-bottom: 32px;
+
+    & input {
+      background-color: $lightBackgroundColor;
+      border: none;
+      border-radius: 5px;
+      outline: none;
+
+      &::placeholder {
+        text-align: center;
+        font-size: $smallText;
+        font-weight: bold;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__Output {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: $primaryColor;
+    border-radius: 5px;
+
+    .Output__text {
+      display: flex;
+      justify-content: space-between;
+      margin: 28px 0;
+
+      p {
+        color: $secondaryColor;
+      }
+    }
+
+    & h2 {
+      color: $whiteColor;
+    }
+  } 
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    width: 60%;
+    margin: 0 auto;
+  }
+
+}
