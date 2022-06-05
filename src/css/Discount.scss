@@ -36,6 +36,7 @@
       background-color: transparent;
       border: none;
       outline: none;
+      text-align: end;
     }
 
     &__Editable:hover {
@@ -82,6 +83,10 @@
         cursor: pointer;
       }
     }
+  }
+
+  &__custom {
+    text-align: end;
   }
 
   &__Output {

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Button from "../components/Button";
 import Title from "../components/Title";
 import "../css/Discount.scss";
@@ -8,25 +8,26 @@ import personIcon from "../assets/icon-person.svg";
 const Discount = () => {
   const [total, setTotal] = useState(0);
   const [tip, setTip] = useState(0);
-
-  const valueRef = useRef();
-  const customPercentage = useRef();
-  const personValue = useRef();
+  const [billValue, setBillValue] = useState('0');
+  const [people, setPeople] = useState(1);
+  const [customDiscount , setCustomDiscount] = useState('0');
 
   const discountAmount = [5, 10, 15, 25, 50];
 
-  const handleChange = (value) => {
-    const amount = valueRef.current.value;
-    const percentage = customPercentage.current.value
-      ? customPercentage.current.value
-      : value;
-    const person = personValue.current.value;
 
-    let total = parseFloat((amount * percentage) / 100).toFixed(2);
-    let tip = parseFloat((amount * 0.12) / person).toFixed(2);
+  const handleChange = (valueName, value) => {
 
-    setTip(tip);
-    setTotal((amount - total) / person);
+    if ( valueName === 'billValue' ) {
+      setBillValue(parseInt(value));
+    } else if ( valueName === 'people' ) {
+      setPeople(parseInt(value));
+    } else if ( valueName === 'customDiscount' || valueName === '') {
+      setCustomDiscount(parseInt(value));
+    }
+
+    let total = billValue - (billValue * customDiscount) / 100;
+    setTotal(parseFloat(total / people).toFixed(2));
+    setTip(parseFloat((total * .12) / people).toFixed(2));
   };
 
   return (
@@ -38,10 +39,12 @@ const Discount = () => {
             <img src={dollarIcon} alt="Dollar" />
           </span>
           <input
-            ref={valueRef}
+            onChange={(e) => { handleChange(e.target.name, e.target.value)}}
             className="Input__Editable"
             type="number"
             placeholder="142.55"
+            value={billValue}
+            name="billValue"
             required
           />
         </div>
@@ -54,12 +57,19 @@ const Discount = () => {
                 key={discount}
                 text={discount}
                 onClick={() => {
-                  handleChange(discount);
+                  handleChange("", discount);
                 }}
               />
             );
           })}
-          <input ref={customPercentage} type="number" placeholder="Custom %" />
+          <input
+            type="number"
+            className="Discount__custom"
+            onChange={(e) => handleChange(e.target.name, e.target.value)}
+            placeholder="Custom %"
+            value={customDiscount}
+            name="customDiscount"
+          />
         </article>
 
         <Title tittle="Number of People" />
@@ -68,10 +78,12 @@ const Discount = () => {
             <img src={personIcon} alt="Person Icon" />
           </span>
           <input
-            ref={personValue}
             className="Input__Editable"
             type="number"
             placeholder="5"
+            onChange={(e) => handleChange(e.target.name, e.target.value)}
+            value={people}
+            name="people"
             required
           />
         </div>
